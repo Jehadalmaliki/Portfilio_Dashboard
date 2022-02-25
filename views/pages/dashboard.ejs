@@ -17,7 +17,7 @@
                 <div class="row">
                     <div class="col-12 col-xl-8 mb-4 mb-lg-0">
                         <div class="card shadow ">
-                            <h5 class="card-header d-flex justify-content-between">Latest Update <button type="button" class="btn btn-sm " data-bs-toggle="modal" data-bs-target="#EditPersonal"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                            <h5 class="card-header d-flex justify-content-between">Latest Update <button type="button" class="btn btn-sm " data-bs-toggle="modal" data-bs-target="#Addinfo"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
                               <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
                             </svg></button></h5>
                             <div class="card-body">
@@ -25,24 +25,28 @@
                                     <table class="table">
                                         <thead>
                                           <tr>
-                                            <th scope="col">Phone</th>
-                                            <th scope="col">Name</th>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Username</th>
+                                            <th scope="col">phone</th>
                                             <th scope="col">Email</th>
-                                            <th scope="col">Age</th>
-                                            <th scope="col">Date</th>
+                                            <th scope="col">ADdress</th>
                                             <th scope="col"></th>
                                             <th scope="col"></th>
                                             
                                           </tr>
                                         </thead>
                                         <tbody>
+                                          <% if(data.length){
+                  
+                                            for(var i = 0; i< data.length; i++) {%> 
                                           <tr>
-                                            <th scope="row">17371705</th>
-                                            <td>Jehad Ali</td>
-                                            <td>johndoe@gmail.com</td>
-                                            <td>30</td>
-                                            <td>Aug 31 1994</td>
-                                            <td><button type="button" class="btn btn-sm " style="color:rgb(41, 204, 155);" data-bs-toggle="modal" data-bs-target="#EditPersonal"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square " viewBox="0 0 16 16">
+                                            <td scope="row" ><%= (i+1) %></td>
+                                            <th scope="row"><%=   data[i].username%></th>
+                                            <td><%=    data[i].phone%></td>
+                                            <td><%=    data[i].email%></td>
+                                            <td><%=   data[i].Address%></td>
+                                          
+                                            <td><button type="button" class="btn btn-sm " style="color:rgb(41, 204, 155);" data-bs-toggle="modal" data-bs-target="#EditPersonal<%=data[i]._id%>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square " viewBox="0 0 16 16">
                                               <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                                               <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                                             </svg></button></td>
@@ -52,7 +56,13 @@
                                              
                                             </div></td>
                                           </tr>
-                                          
+                                          <% }
+                                 
+                                }else{ %>
+                                    <tr>
+                                       <td colspan="5">لايوجد خبرات</td>
+                                    </tr>
+                                 <% } %>  
                                        
                                         </tbody>
                                       </table>
@@ -98,7 +108,7 @@
                 </div>
                 <div class="modal-body">
                     <form class="row g-3 needs-validation" novalidate>
-                        <!-- Job details -->
+                    
                         <div class="col-12">
                             <div class="input-group mb-3">
                                 <input type="file" class="form-control" id="inputGroupFile02">
@@ -112,8 +122,8 @@
             </div>
         </div>
     </div>
-     <!-- Modal Add Education -->
-     <div class="modal fade" id="EditPersonal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   
+     <div class="modal fade" id="Addinfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
           <div class="modal-content p-3">
               <div class="modal-header">
@@ -121,8 +131,8 @@
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                  <form class="row g-3 needs-validation"  action="/index" method="post" enctype="multipart/form-data">
-                      <!-- Education details -->
+                  <form class="row g-3 needs-validation"  action="user-info" method="post" enctype="multipart/form-data">
+                   
                       
                      <div class="mt-3">
                     <label class="form-label" for="username-input">Username </label>
@@ -147,11 +157,7 @@
                 
                         <input class="form-control w-25" required type="file" name="profile_picture" id="profile_picture-input" />
                       </div>
-                      <!-- <div class="mt-3">
-                        <label class="form-label" for="cv_file-input">CV </label>
-                        <input required class="form-control w-25" type="file" name="cv_file" id="cv_file-input" />
-                      </div>
-                      <div class="mt-4"> -->
+                     
                         <button class="btn btn-primary d-block " type="submit">Save</button>
                       </div>
                   </form>

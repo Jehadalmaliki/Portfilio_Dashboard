@@ -34,14 +34,14 @@ const upload = multer({
 const router = Router();
 
 /* GET index page. */
-router.get('/', (req, res) => {
-  res.render('pages/dashboard');
-});
+// router.get('/', (req, res) => {
+//   res.render('pages/dashboard');
+// });
 
-// dashboard page
-router.get('/dashboard', function(req, res) {
-  res.render('pages/dashboard');
-});
+// // dashboard page
+// router.get('/dashboard', function(req, res) {
+//   res.render('pages/dashboard');
+// });
 // social page
 router.get('/dash-social', function(req, res) {
   res.render('pages/dash-social');
@@ -69,8 +69,14 @@ const userFilesHandler = upload.fields([
   //   maxCount: 1,
   // },
 ]);
-
-router.post('/index', userFilesHandler, async (req, res) => {
+//find
+router.get('/dashboard', (req, res, next)=>{
+  User.find().then((result) =>{
+    res.render('pages/dashboard', { data: result})
+  })
+})
+// add user
+router.post('/user-info', userFilesHandler, async (req, res) => {
   try {
     const { username,phone,email,Address } = req.body;
     const { profile_picture} = req.files;
@@ -83,8 +89,14 @@ router.post('/index', userFilesHandler, async (req, res) => {
       profile_picture: profile_picture[0].path,
       // cv_file: cv_file[0].path,
     });
-
-    res.render('pages/index');
+    // var experienceDetails = new User({
+    //   experience: req.body.experience,
+    //   year: req.body.year,
+    //   company_name: req.body.company_name,
+    // });
+     
+    // experienceDetails .save();
+    res.redirect('/dashboard');
   } catch (err) {
     console.log(err.writeErrors);
     res.json(err.writeErrors[0].errmsg);
