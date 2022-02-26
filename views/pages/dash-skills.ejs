@@ -67,7 +67,7 @@
                                         
                                     </div>
                                 </div>
-                                 <!-- Modal Add Skill -->
+                                 <!-- Modal Edit Skill -->
     <div class="modal fade" id="editSkill<%=skills[item]._id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content p-3">
@@ -79,10 +79,12 @@
                     <form class="row g-3 needs-validation"  action="Edit_skills" method="post" >
                         <input  type="hidden" name="id" value="<%=skills[item]._id%>">
                         <div class="col-12">
-                            <input type="text" class="form-control rounded-pill" id="skill" name="title" placeholder="Skill"  value="<%=skills[item].title%>">
+                            <input type="text" class="form-control rounded-pill" id="skill" name="title" placeholder="Skill" 
+                             value="<%=skills[item].title%>">
                         </div>
                         <div class="col-12">
-                            <input type="range" class="form-range"   name="progress_percent" id="customRange1" value="<%=skills[item].progress_percent%>">
+                            <input type="range" class="form-range"   name="progress_percent" id="customRange1"
+                             value="<%=skills[item].progress_percent%>">
                         </div>
                         <div class="modal-footer">
                             <button class="btn btn-primary d-block " type="submit">Save</button>
