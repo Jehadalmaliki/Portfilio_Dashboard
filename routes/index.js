@@ -38,15 +38,13 @@ router.get('/dash-Edu', function(req, res) {
 router.get('/dash-Experince', function(req, res) {
   res.render('pages/dash-Experince');
 }); 
-// Experince page
-router.get('/dash-Skill', function(req, res) {
-  res.render('pages/dash-skills');
-}); 
+
+// 
 // Skills page
 router.get('/dash-Skill', function(req, res, next) {
-  skillsModel.find().then((result)=>{
+  Skills.find().then((result)=>{
     res.render('pages/dash-skills', { skills:result});
-  
+  console.log(result);
   })
   });
 // user operation
@@ -117,6 +115,31 @@ router.post('/addskills', function(req, res, next) {
         
 console.log("skill was add")
 res.redirect('/dash-Skill');
+
+});
+// Edit Skills
+router.post('/Edit_skills', function(req, res, next){
+  
+  var item = {
+    title: req.body.title,
+    progress_percent: req.body.progress_percent,
+   
+  };
+  var id = req.body.id;
+  Skills.updateMany({"_id": id}, {$set: item}, item, function(err, result){
+   
+    console.log("item updated");
+    console.log(item);
+  })
+  res.redirect('/dash-Skill');
+});
+//Delete skill item
+
+router.get('/delete_skill/:id',function(req,res,next){
+  Skills.deleteOne({"_id":req.params.id},function(err,result){
+    console.log("item deleted");
+  })
+  res.redirect('/dash-Skill');
 
 });
 module.exports = router;
