@@ -30,6 +30,7 @@
                                             <th scope="col">phone</th>
                                             <th scope="col">Email</th>
                                             <th scope="col">ADdress</th>
+                                         
                                             <th scope="col"></th>
                                             <th scope="col"></th>
                                             
@@ -45,22 +46,62 @@
                                             <td><%=    data[i].phone%></td>
                                             <td><%=    data[i].email%></td>
                                             <td><%=   data[i].Address%></td>
+                                            
                                           
-                                            <td><button type="button" class="btn btn-sm " style="color:rgb(41, 204, 155);" data-bs-toggle="modal" data-bs-target="#EditPersonal<%=data[i]._id%>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square " viewBox="0 0 16 16">
+                                            <td><button type="button" class="btn btn-sm " style="color:rgb(41, 204, 155);" data-bs-toggle="modal" data-bs-target="#editModal<%=data[i]._id%>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square " viewBox="0 0 16 16">
                                               <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                                               <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                                             </svg></button></td>
                                            
-                                            <td><div class="form-check form-switch">
-                                              <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked />
-                                             
-                                            </div></td>
+                                            <td>
+                                              <a href="/delete_user/<%= data[i]._id %>"  data-doc="">delete</a>
+                                              </td>
                                           </tr>
+                                          <!--edit user-->
+                                          <div class="modal fade" id="editModal<%=data[i]._id%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+          <div class="modal-content p-3">
+              <div class="modal-header">
+                  <h4 class="modal-title fw-bold text-center" id="exampleModalLabel"> Edit Personal</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <form class="row g-3 needs-validation"  action="edit_User" method="post" >
+                    <input type="hidden" name="id" value="<%= data[i]._id %>">
+                      
+                     <div class="mt-3">
+                    <label class="form-label" for="username-input">Username </label>
+                    <input required class="form-control w-25" type="text" name="username" id="username-input" value="<%=   data[i].username%>" />
+                     </div>
+                    
+                    
+                      <div class="col-12">
+                          <label for="phone" class="form-label">phone</label>
+                          <input type="text" class="form-control rounded-pill" name="phone" id="phone" placeholder="phone" value="<%=    data[i].phone%>">
+                      </div>
+                      <div class="col-12">
+                          <label for="Email" class="form-label">Email</label>
+                          <input type="text" class="form-control rounded-pill"type="email" name="email" placeholder="Email" value="<%=    data[i].email%>">
+                      </div>
+                      <div class="col-12">
+                          <label for="Age" class="form-label">Address</label>
+                          <input type="text" class="form-control rounded-pill" name="Address" id="Address" placeholder="Ex. 20" value="<%=   data[i].Address%>">
+                      </div>
+                      
+                     
+                        <button class="btn btn-primary d-block " type="submit">Save</button>
+                      </div>
+                  </form>
+              </div>
+            
+          </div>
+      </div>
+  </div>
                                           <% }
                                  
                                 }else{ %>
                                     <tr>
-                                       <td colspan="5">لايوجد خبرات</td>
+                                       <td colspan="5"> NO user found</td>
                                     </tr>
                                  <% } %>  
                                        
@@ -79,50 +120,9 @@
         </div>
     </div>
   </main>
-<!-- Modal Delete -->
-<div class="modal fade" id="delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-          <div class="modal-body fw-bold d-flex justify-content-lg-center align-items-center flex-column">
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-exclamation-circle text-danger" viewBox="0 0 16 16">
-              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-              <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
-            </svg>
-              <h3 class="fs-4">Do you want to delete?</h3>
-          </div>
-          <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
-          <button type="button" class="btn btn-danger">Yes</button>
-          </div>
-      </div>
-  </div>
-</div>
 
-  <!-- Modal Edit Image Profile -->
-    <div class="modal fade" id="e" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content p-3">
-                <div class="modal-header">
-                    <h4 class="modal-title fw-bold text-center" id="exampleModalLabel">Edit image profile</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form class="row g-3 needs-validation" novalidate>
-                    
-                        <div class="col-12">
-                            <div class="input-group mb-3">
-                                <input type="file" class="form-control" id="inputGroupFile02">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Save</button>
-                </div>
-            </div>
-        </div>
-    </div>
-   
+ 
+   <!--Add User-->
      <div class="modal fade" id="Addinfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
           <div class="modal-content p-3">
@@ -152,11 +152,7 @@
                           <label for="Age" class="form-label">Address</label>
                           <input type="text" class="form-control rounded-pill" name="Address" id="Address" placeholder="Ex. 20">
                       </div>
-                      <div class="mt-3">
-                        <label class="form-label" for="profile_picture-input">Profile picture </label>
-                
-                        <input class="form-control w-25" required type="file" name="profile_picture" id="profile_picture-input" />
-                      </div>
+                      
                      
                         <button class="btn btn-primary d-block " type="submit">Save</button>
                       </div>
@@ -167,6 +163,18 @@
       </div>
   </div>
   <%- include('../partials/dash-script'); %>  
-   
+  <script>
+    const trashcan = document.querySelector('a.delete');
+    trashcan.addEventListener('click', (e) => {
+      const endpoint = `/dashboard/${trashcan.dataset.doc}`;
+      fetch(endpoint, {
+        method: 'DELETE',
+      })
+      .then(response => response.json())
+      .then(data => window.location.href = data.redirect)
+      .catch(err => console.log(err));
+    });
+    </script> 
 </body>
+
 </html>

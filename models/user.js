@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const DB = 'mongodb://127.0.0.1:27017/Jehad-Protfilio';
+const DB = 'mongodb://127.0.0.1:27017/Jehad3-Protfilio';
 
 mongoose
   .connect(DB, {
@@ -30,7 +30,8 @@ const fileSchema = new mongoose.Schema({
   Address: {
     type: String,
     required: true,
-    unique: true,
+ 
+   
     
   },
   email: {
@@ -38,11 +39,7 @@ const fileSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  profile_picture: {
-    type: String,
-    required: true,
-    unique: true,
-  },
+
   is_active: {
      type: Boolean,
       default: 1 }

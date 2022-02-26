@@ -19,6 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use(express.static('views/pages'));
+app.use(express.static('public/upload'));
 
 app.use('/', indexRouter);
 

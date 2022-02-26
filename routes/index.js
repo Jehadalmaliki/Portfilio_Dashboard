@@ -1,33 +1,17 @@
 const { Router } = require('express');
+const assert = require("assert")
 const multer = require('multer');
 const path = require('path');
 const User = require('./../models/user');
+// const Skills = require('./../models/dash-skills');
 // ===multer file==//
 
 const storage = multer.diskStorage({
  
-  filename: (req, file, cb) => {
-    const randomNumber = Math.round(Math.random() * 1e9);
-    const uniqueSuffix = `${Date.now()}-${randomNumber}`;
-    cb(null, `${uniqueSuffix}-${file.originalname}`);
-  },
-  destination: (req, file, cb) => {
-    cb(null, './public/upload');
-  },
 });
 
 const upload = multer({
-  fileFilter: (req, { fieldname, mimetype, originalname }, cb) => {
-    const isProfile =
-      fieldname == 'profile_picture' && mimetype == 'image/jpeg';
-    // const isCV = fieldname == 'cv_file' && mimetype == 'application/pdf';
-  
 
-    if (isProfile) cb(null, true);
-    // else if (isCV) cb(null, true);
-    else cb(new Error(`Sorry  The type of ${originalname} not support.`), false);
-  },
-  storage,
 });
 
 // ==routing==//
@@ -60,14 +44,6 @@ router.get('/dash-Skill', function(req, res) {
 }); 
 // user operation
 const userFilesHandler = upload.fields([
-  {
-    name: 'profile_picture',
-    maxCount: 1,
-  },
-  // {
-  //   name: 'cv_file',
-  //   maxCount: 1,
-  // },
 ]);
 //find
 router.get('/dashboard', (req, res, next)=>{
@@ -79,28 +55,45 @@ router.get('/dashboard', (req, res, next)=>{
 router.post('/user-info', userFilesHandler, async (req, res) => {
   try {
     const { username,phone,email,Address } = req.body;
-    const { profile_picture} = req.files;
-
     await User.insertMany({
       username,
       phone,
       Address,
       email,
-      profile_picture: profile_picture[0].path,
-      // cv_file: cv_file[0].path,
-    });
-    // var experienceDetails = new User({
-    //   experience: req.body.experience,
-    //   year: req.body.year,
-    //   company_name: req.body.company_name,
-    // });
      
-    // experienceDetails .save();
+    });
     res.redirect('/dashboard');
   } catch (err) {
-    console.log(err.writeErrors);
+    console.log("canot derict");
     res.json(err.writeErrors[0].errmsg);
   }
 });
+//Edit  user on the view in the data tables section
 
+router.post('/edit_User', function(req, res, next){
+  console.log(req.body.username);
+  var item = {
+    username: req.body.username,
+    phone: req.body.phone,
+    Address:req.body.Address,
+    email:req.body.email,
+  };
+  var id = req.body.id;
+  User.updateMany({"_id": id}, {$set: item}, item, function(err, result){
+   
+    console.log("item updated");
+    console.log(item);
+  })
+  res.redirect('/dashboard');
+});
+
+//Delete experience item
+
+router.get('/delete_user/:id',function(req,res,next){
+  User.deleteOne({"_id":req.params.id},function(err,result){
+    console.log("item deleted");
+  })
+  res.redirect('/dashboard');
+
+});
 module.exports = router;
