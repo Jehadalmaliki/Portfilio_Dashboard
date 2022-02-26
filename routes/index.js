@@ -3,7 +3,7 @@ const assert = require("assert")
 const multer = require('multer');
 const path = require('path');
 const User = require('./../models/user');
-// const Skills = require('./../models/dash-skills');
+const Skills = require('./../models/dash-skills');
 // ===multer file==//
 
 const storage = multer.diskStorage({
@@ -42,6 +42,13 @@ router.get('/dash-Experince', function(req, res) {
 router.get('/dash-Skill', function(req, res) {
   res.render('pages/dash-skills');
 }); 
+// Skills page
+router.get('/dash-Skill', function(req, res, next) {
+  skillsModel.find().then((result)=>{
+    res.render('pages/dash-skills', { skills:result});
+  
+  })
+  });
 // user operation
 const userFilesHandler = upload.fields([
 ]);
@@ -94,6 +101,22 @@ router.get('/delete_user/:id',function(req,res,next){
     console.log("item deleted");
   })
   res.redirect('/dashboard');
+
+});
+
+//Add new skill to the view in the data tables section
+router.post('/addskills', function(req, res, next) {
+     
+  var skillDetails = new Skills({
+    title: req.body.title,
+    progress_percent: req.body.progress_percent,
+   
+  });
+   
+  skillDetails.save();
+        
+console.log("skill was add")
+res.redirect('/dash-Skill');
 
 });
 module.exports = router;
