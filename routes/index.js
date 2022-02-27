@@ -7,7 +7,7 @@ var fs = require('fs');
 const User = require('./../models/user');
 const Skills = require('./../models/dash-skills');
 var experienceModel = require('../models/Experince');
-var qualificationsModel=require('../models/qualifications');
+var qualificationsModel=require('../models/eduction');
 // ===multer file==//
 require('dotenv/config');
 const storage = multer.diskStorage({
@@ -36,9 +36,7 @@ router.get('/dash-social', function(req, res) {
   res.render('pages/dash-social');
 });
 // Eduction page
-router.get('/dash-Edu', function(req, res) {
-  res.render('pages/dash-Eduction');
-}); 
+ 
 router.get('/dash-Edu', function(req, res, next) {
   qualificationsModel.find().then((result)=>{
   
@@ -203,4 +201,49 @@ router.get('/delete_experience/:id',function(req,res,next){
 res.redirect('/dash-Experince');
 
 });
+
+//Add new qualificationl to the view in the data tables section
+router.post('/add_qualification', function(req, res, next) {
+     
+  var qualificationDetails = new qualificationsModel({
+    qualification: req.body.qualification,
+    date: req.body.date,
+    university: req.body.university,
+  });
+   
+  qualificationDetails.save();
+        
+
+    res.redirect('/dash-Edu');
+
+});
+
+// Edit qualification on the view in the data tables section
+
+router.post('/edit_qualification', function(req, res, next){
+  var item = {
+    qualification: req.body.qualification,
+    date: req.body.date,
+    university:req.body.university
+  };
+  var id = req.body.id;
+  qualificationsModel.updateOne({"_id": id}, {$set: item}, item, function(err, result){
+    assert.equal(null, err);
+    console.log("item updated");
+  })
+  res.redirect('/dash-Edu');
+});
+
+//Delete qualification item
+
+router.get('/delete_qualification/:id',function(req,res,next){
+  qualificationsModel.deleteOne({"_id":req.params.id},function(err,result){
+    console.log("item deleted");
+  })
+res.redirect('/dash-Edu');
+
+});
+ 
+
+
 module.exports = router;
