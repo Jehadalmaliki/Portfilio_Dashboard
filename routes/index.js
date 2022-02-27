@@ -33,12 +33,14 @@ const router = Router();
 //   res.render('pages/dashboard');
 // });
 // social page
-router.get('/index', function(req, res) {
-  qualificationsModel.find().then((result)=>{
-  
-    res.render('pages/index', { title: 'Jehad Almaliki',qualifications:result });
-  })
+router.get('/index', async(req, res)=> {
+  var qualifications = await qualificationsModel.find();
+ var skill= await Skills.find();
+  res.render('pages/index', { qualification:qualifications ,skills:skill})
+ 
 });
+
+
 
 router.get('/dash-social', function(req, res) {
   res.render('pages/dash-social');

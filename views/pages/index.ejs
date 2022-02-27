@@ -15,20 +15,21 @@
     <section id="home" class="home">
       
         <div class="Introduction" id="Introduction">
-            <% if(qualifications.length) { 
+            <% if(qualification.length) { 
                             
                 for(var i=0;i<1;i++) { %>
-                   
-            <h1>Hi, I'm <span><%=title %></span></h1>
-            <h2><%=qualifications[i].university %> <%=qualifications[i].qualification %></h2>
-            <p><%=qualifications[i].date %></p>
+            <h1>Hi, I'm <span>Jehad</span></h1>
+            <h2><%=qualification[i].university %> <%=qualification[i].qualification %></h2>
+            <p><%=qualification[i].date %></p>
             <a class="btn"  href=" /C.Vs/jehadCV.pdf" download="jehadCV" target="_blank">
                 Download C.V
             
             </a>
             <% } }else{ %><h>jjj</h>
                 <%} %> 
-        </div>
+            </div> 
+        
+           
 
         
     </section>
@@ -39,36 +40,39 @@
         <div class="heading">
             <h1>Skills</h1>
         </div>
-        <!-- Content -->
+     
         <div class="skills-content">
             <div class="skills-bars">
                 <div class="skills-text">
                     <h2>My creative Skills</h2>
                     <p>I have extensive knowledge of HTML, JavaScript, PHP, and Mysql.</p>
                     
+                    
+                <% let a =1; if(skills.length){ %>
+    <% for(let e =0; e< skills.length; e++){ %>
+       
+<div class="skills-box">
+    <i ><h3><%=skills[e].title%></h3></i>
+    <span><%=skills[e].progress_percent %></span>
+    <div class="percent-bar html-bar"></div>
+</div>
+                
+                
+<%}
 
-                </div>
-                <div class="skills-box">
-                    <i class="fab fa-html5"><h3>HTML</h3></i>
-                    <span>94%</span>
-                    <div class="percent-bar html-bar"></div>
-                </div>
-                <div class="skills-box">
-                    <i class="fab fa-css3"><h3>CSS</h3></i>
-                    <span>84%</span>
-                    <div class="percent-bar css-bar"></div>
-                </div>
-                <div class="skills-box">
-                    <i class="fab fa-js"><h3>JavaScript</h3></i>
-                    <span>65%</span>
-                    <div class="percent-bar js-bar"></div>
-                </div>
-                <div class="skills-box">
-                    <i class="fas fa-palette"><h3>UI/UX</h3></i>
-                    <span>80%</span>
-                    <div class="percent-bar ux-bar"></div>
-                </div>
-            </div>
+
+}
+
+else{
+%>
+
+
+           لايوجد مهارات
+      
+
+<%}%>
+</div> 
+            </div> 
            
             <!-- Content -->
             
