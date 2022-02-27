@@ -8,6 +8,7 @@ const User = require('./../models/user');
 const Skills = require('./../models/dash-skills');
 var experienceModel = require('../models/Experince');
 var qualificationsModel=require('../models/eduction');
+//var socialSchema=require('../models/dash-socials');
 // ===multer file==//
 require('dotenv/config');
 const storage = multer.diskStorage({
@@ -32,6 +33,10 @@ const router = Router();
 //   res.render('pages/dashboard');
 // });
 // social page
+router.get('/index', function(req, res) {
+  res.render('pages/index');
+});
+
 router.get('/dash-social', function(req, res) {
   res.render('pages/dash-social');
 });
@@ -202,7 +207,7 @@ res.redirect('/dash-Experince');
 
 });
 
-//Add new qualificationl to the view in the data tables section
+//Add new Eduction to the view in the data tables section
 router.post('/add_qualification', function(req, res, next) {
      
   var qualificationDetails = new qualificationsModel({
@@ -218,7 +223,7 @@ router.post('/add_qualification', function(req, res, next) {
 
 });
 
-// Edit qualification on the view in the data tables section
+// Edit  Eduction on the view in the data tables section
 
 router.post('/edit_qualification', function(req, res, next){
   var item = {
@@ -234,7 +239,7 @@ router.post('/edit_qualification', function(req, res, next){
   res.redirect('/dash-Edu');
 });
 
-//Delete qualification item
+//Delete Eduction item
 
 router.get('/delete_qualification/:id',function(req,res,next){
   qualificationsModel.deleteOne({"_id":req.params.id},function(err,result){
