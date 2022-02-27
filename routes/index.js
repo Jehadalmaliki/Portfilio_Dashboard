@@ -35,8 +35,10 @@ const router = Router();
 // social page
 router.get('/index', async(req, res)=> {
   var qualifications = await qualificationsModel.find();
- var skill= await Skills.find();
-  res.render('pages/index', { qualification:qualifications ,skills:skill})
+  var skill= await Skills.find();
+  var experience= await experienceModel.find();
+
+  res.render('pages/index', { qualification:qualifications ,skills:skill ,data:experience})
  
 });
 

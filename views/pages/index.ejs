@@ -67,7 +67,7 @@ else{
 %>
 
 
-           لايوجد مهارات
+        NO Skills Avalible
       
 
 <%}%>
@@ -78,14 +78,20 @@ else{
             
                 <div class="skills-bars">
                     <div class="skills-text">
+                        <% if(data.length){
+                  
+                  for(var i = 0; i< 1; i++) {%>  
                         <h2>My creative expriences</h2>
-                        <p>I am a developer and UX/UI designer based in Yemen. </p>
-                        <p>My extensive experience with designing and developing websites using Html5, CSS, and JS on Rails matches well with your requirements.</p>
-                        <p>National and international customers have relied on me for design,</p>
-                        <p>As a freelancer, I works also with web , companies and individuals to create websites business. </p>
-                        <p>As a freelancer, I works also with web , companies and individuals to create websites business. </p>
-                        <p>National and international </p>
-                        
+                        <p>I am a <%=   experiencedata= data[i].experience%> based in Yemen. </p>
+                        <p><%= data[i].Description%></p>
+                        <% }
+                                 
+                                }else{ %>
+                                    <tr>
+                                       <td colspan="5">No expirince</td>
+                                    </tr>
+                                 <% } %>    
+                               
                         
     
                     </div>
