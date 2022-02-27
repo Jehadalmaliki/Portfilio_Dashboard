@@ -34,7 +34,10 @@ const router = Router();
 // });
 // social page
 router.get('/index', function(req, res) {
-  res.render('pages/index');
+  qualificationsModel.find().then((result)=>{
+  
+    res.render('pages/index', { title: 'Jehad Almaliki',qualifications:result });
+  })
 });
 
 router.get('/dash-social', function(req, res) {

@@ -15,10 +15,19 @@
     <section id="home" class="home">
       
         <div class="Introduction" id="Introduction">
-            <h1>Hi, I'm <span>Jehad Almaliki</span></h1>
-            <h2>Freelance Web Developer</h2>
-            <p>Powerful skills in web development.</p>
-            <a href="#" class="btn">Download CV</a>
+            <% if(qualifications.length) { 
+                            
+                for(var i=0;i<1;i++) { %>
+                   
+            <h1>Hi, I'm <span><%=title %></span></h1>
+            <h2><%=qualifications[i].university %> <%=qualifications[i].qualification %></h2>
+            <p><%=qualifications[i].date %></p>
+            <a class="btn"  href=" /C.Vs/jehadCV.pdf" download="jehadCV" target="_blank">
+                Download C.V
+            
+            </a>
+            <% } }else{ %><h>jjj</h>
+                <%} %> 
         </div>
 
         
