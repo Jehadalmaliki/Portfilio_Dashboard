@@ -1,7 +1,7 @@
 <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light  sidebar collapse shadow ">
     <!-- image profile -->
     <div class=" col-12 d-flex justify-content-center align-items-center p-4 position-relative ">
-      <img src="image/facepng1." width="50%" class="img-fluid rounded-circle" alt="">
+      <img src="images/face1.png" width="50%" class="img-fluid rounded-circle" alt="">
       <a role="button" data-bs-toggle="modal" data-bs-target="#e" class="position-absolute bg-white
           border border-primary rounded d-flex justify-content-center align-items-lg-center rounded-circle" 
           style="bottom: 10%;left: 35%; width: 30px;height: 30px;">
@@ -18,7 +18,7 @@
   <div class="position-sticky  " >
     <ul class="nav flex-column shadow ">
         <li class="nav-item" >
-          <a class="nav-link active" aria-current="page" href="dashboard">
+          <a class="nav-link active" aria-current="page" href="home">
             <svg xmlns="http://www.w3.org/2000/svg" style="color:rgb(41, 204, 155);" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
             <span class="ml-2">Home</span>
           </a>
@@ -47,6 +47,12 @@
             <span class="ml-2">Social</span>
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/dash-social">
+            <svg xmlns="http://www.w3.org/2000/svg" style="color:rgb(41, 204, 155);" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+            <span class="ml-2">Services</span>
+          </a>
+        </li>
        
        
        
@@ -62,18 +68,18 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-              <form class="row g-3 needs-validation" novalidate>
+              <form class="row g-3 needs-validation"  >
               
                   <div class="col-12">
                       <div class="input-group mb-3">
-                          <input type="file" class="form-control" id="inputGroupFile02">
+                          <input type="file" class="form-control" id="inputGroupFile02"name="image">
+                          <button  class="btn btn-primary" type="submit">Sumbut</button>
                       </div>
                   </div>
+                 
               </form>
           </div>
-          <div class="modal-footer">
-              <button type="button" class="btn btn-primary">Save</button>
-          </div>
+         
       </div>
   </div>
 </div>

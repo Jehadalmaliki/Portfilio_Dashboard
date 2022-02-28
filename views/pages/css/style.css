@@ -82,7 +82,7 @@ button.btn.btn-outline-warning {
   background: #eee !important;
 }
 .sidebar {
-    position: fixed;
+    position: sticky;
     top: 0;
     bottom: 0;
     left: 0;

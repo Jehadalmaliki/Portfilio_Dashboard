@@ -133,7 +133,7 @@ header .navbar a:hover{
 .home {
   position: relative;
   width: 100%;
-  min-height: 70vh;
+  min-height: 100vh;
   color: #222435;
   display: flex;
   align-items: center;
