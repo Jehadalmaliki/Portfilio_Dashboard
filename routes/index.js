@@ -4,14 +4,15 @@ const multer = require('multer');
 const path = require('path');
 var bodyParser = require('body-parser');
 var fs = require('fs');
-const User = require('./../models/user');
+const User = require('../models/user');
 const Skills = require('./../models/dash-skills');
 var experienceModel = require('../models/Experince');
 var qualificationsModel=require('../models/eduction');
 var social=require('../models/dash-socials');
+const router = Router();
 // ===multer file==//
 // ==routing==//
-const router = Router();
+
 
 require('dotenv/config');
 
@@ -94,9 +95,9 @@ router.get('/dash-Skill', function(req, res, next) {
 // user operation
 
 //find
-router.get('/dashboard', (req, res, next)=>{
+router.get('/home', (req, res, next)=>{
   User.find().then((result) =>{
-    res.render('pages/dashboard', { data: result})
+    res.render('pages/home', { data: result})
   })
 })
 // add user
@@ -109,7 +110,7 @@ router.post('/user-info', function(req, res, next) {
     })
      
     userDetails.save();
-    res.redirect('/dashboard');
+    res.redirect('/home');
 
 });
 //Edit  user on the view in the data tables section
@@ -128,7 +129,7 @@ router.post('/edit_User', function(req, res, next){
     console.log("item updated");
     console.log(item);
   })
-  res.redirect('/dashboard');
+  res.redirect('/home');
 });
 
 //Delete user item
@@ -137,7 +138,7 @@ router.get('/delete_user/:id',function(req,res,next){
   User.deleteOne({"_id":req.params.id},function(err,result){
     console.log("item deleted");
   })
-  res.redirect('/dashboard');
+  res.redirect('/home');
 
 });
 

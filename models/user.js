@@ -23,13 +23,13 @@ const fileSchema = new mongoose.Schema({
   },
   phone: {
     type: Number,
-    required: true,
+   
     unique: true,
     
   },
   Address: {
     type: String,
-    required: true,
+    
  
    
     
@@ -39,7 +39,10 @@ const fileSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-
+  password :{
+    type  : String,
+    required : true
+} ,
   is_active: {
      type: Boolean,
       default: 1 }
