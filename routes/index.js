@@ -8,30 +8,47 @@ const User = require('./../models/user');
 const Skills = require('./../models/dash-skills');
 var experienceModel = require('../models/Experince');
 var qualificationsModel=require('../models/eduction');
-//var socialSchema=require('../models/dash-socials');
+var social=require('../models/dash-socials');
 // ===multer file==//
-require('dotenv/config');
-const storage = multer.diskStorage({
- 
-
-});
-
-const upload = multer({
-
-});
-
 // ==routing==//
 const router = Router();
 
-/* GET index page. */
-// router.get('/', (req, res) => {
-//   res.render('pages/dashboard');
-// });
+require('dotenv/config');
 
-// // dashboard page
-// router.get('/dashboard', function(req, res) {
-//   res.render('pages/dashboard');
-// });
+
+const storage = multer.diskStorage({
+ 
+  filename: (req, file, cb) => {
+    const randomNumber = Math.round(Math.random() * 1e9);
+    const uniqueSuffix = `${Date.now()}-${randomNumber}`;
+    cb(null, `${uniqueSuffix}-${file.originalname}`);
+  },
+  destination: (req, file, cb) => {
+    cb(null, './public/upload');
+  },
+});
+
+const upload = multer({
+  fileFilter: (req, { fieldname, mimetype, originalname }, cb) => {
+    const isicon =
+      fieldname == 'icon' && mimetype == 'image/jpeg';
+   
+  
+
+    if (isicon) cb(null, true);
+ 
+    else cb(new Error(`Sorry  The type of ${originalname} not support.`), false);
+  },
+  storage,
+});
+const userFilesHandler = upload.fields([
+  {
+    name: 'icon',
+    maxCount: 1,
+  },
+  
+]);
+
 // social page
 router.get('/index', async(req, res)=> {
   var qualifications = await qualificationsModel.find();
@@ -45,7 +62,11 @@ router.get('/index', async(req, res)=> {
 
 
 router.get('/dash-social', function(req, res) {
-  res.render('pages/dash-social');
+  social.find().then((result)=>{
+  
+    res.render('pages/dash-social', { social:result });
+  })
+ 
 });
 // Eduction page
  
@@ -70,8 +91,7 @@ router.get('/dash-Skill', function(req, res, next) {
   })
   });
 // user operation
-const userFilesHandler = upload.fields([
-]);
+
 //find
 router.get('/dashboard', (req, res, next)=>{
   User.find().then((result) =>{
@@ -79,21 +99,17 @@ router.get('/dashboard', (req, res, next)=>{
   })
 })
 // add user
-router.post('/user-info', userFilesHandler, async (req, res) => {
-  try {
-    const { username,phone,email,Address } = req.body;
-    await User.insertMany({
-      username,
-      phone,
-      Address,
-      email,
+router.post('/user-info', function(req, res, next) {
+    var userDetails = new  User({
+      username: req.body.username,
+      phone: req.body. phone,
+      Address: req.body. Address,
+      email: req.body. email,
+    })
      
-    });
+    userDetails.save();
     res.redirect('/dashboard');
-  } catch (err) {
-    console.log("canot derict");
-    res.json(err.writeErrors[0].errmsg);
-  }
+
 });
 //Edit  user on the view in the data tables section
 
@@ -256,6 +272,51 @@ res.redirect('/dash-Edu');
 
 });
  
+//Add social item
 
 
+router.post('/add_social', userFilesHandler, async (req, res) => {
+  try {
+    const { Social_name, Link } = req.body;
+    const { icon } = req.files;
+
+    await social.insertMany({
+      Social_name,
+      Link,
+      icon: icon[0].path,
+     
+    });
+
+    res.redirect('/dash-social');
+  } catch (err) {
+    console.log(err.writeErrors);
+    res.json(err.writeErrors[0].errmsg);
+  }
+});
+// Edit  Social on the view in the data tables section
+
+router.post('/edit_social', function(req, res, next){
+  var item = {
+    Social_name: req.body.Social_name,
+    Link: req.body.Link,
+    icon:req.body.icon
+  };
+  var id = req.body.id;
+  social.updateOne({"_id": id}, {$set: item}, item, function(err, result){
+    assert.equal(null, err);
+    console.log(item );
+  })
+  res.redirect('/dash-social');
+});
+
+//Delete Social item
+
+router.get('/delete_social/:id',function(req,res,next){
+  social.deleteOne({"_id":req.params.id},function(err,result){
+    console.log("item deleted");
+  })
+res.redirect('/dash-social');
+
+});
+ 
 module.exports = router;
