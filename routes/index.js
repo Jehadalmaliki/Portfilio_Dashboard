@@ -49,18 +49,19 @@ const userFilesHandler = upload.fields([
   
 ]);
 
-// social page
+// Index page
 router.get('/index', async(req, res)=> {
   var qualifications = await qualificationsModel.find();
   var skill= await Skills.find();
   var experience= await experienceModel.find();
+  var social1= await social.find();
 
-  res.render('pages/index', { qualification:qualifications ,skills:skill ,data:experience})
+  res.render('pages/index', { qualification:qualifications ,skills:skill ,data:experience,social:social1})
  
 });
 
 
-
+// Social page
 router.get('/dash-social', function(req, res) {
   social.find().then((result)=>{
   
