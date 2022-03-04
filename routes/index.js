@@ -1,22 +1,28 @@
 const { Router } = require('express');
 const assert = require("assert")
 const multer = require('multer');
+
 const path = require('path');
-var bodyParser = require('body-parser');
+
 var fs = require('fs');
 const User = require('../models/user');
 const Skills = require('./../models/dash-skills');
 var experienceModel = require('../models/Experince');
 var qualificationsModel=require('../models/eduction');
 var social=require('../models/dash-socials');
+var Protfilio_Img=require('../models/image_protifilio');
+require('dotenv/config');
 const router = Router();
 // ===multer file==//
 // ==routing==//
 
+// protifilio images
 
-require('dotenv/config');
 
 
+
+
+// social image
 const storage = multer.diskStorage({
  
   filename: (req, file, cb) => {
@@ -24,6 +30,7 @@ const storage = multer.diskStorage({
     const uniqueSuffix = `${Date.now()}-${randomNumber}`;
     cb(null, `${uniqueSuffix}-${file.originalname}`);
   },
+  
   destination: (req, file, cb) => {
     cb(null, './public/upload');
   },
@@ -92,6 +99,60 @@ router.get('/dash-Skill', function(req, res, next) {
   console.log(result);
   })
   });
+//   // image protfilio
+
+// var storage1 = multer.diskStorage({
+// 	destination: (req, file, cb) => {
+// 		cb(null, './public/upload')
+// 	},
+// 	filename: (req, file, cb) => {
+// 		cb(null, file.fieldname + '-' + Date.now())
+// 	}
+// });
+
+// var upload1 = multer({ storage: storage1 });
+// // Step 6 - load the mongoose model for Image
+
+
+
+// // router.get('/', (req, res) => {
+// //   Protfilio_Img.find({}, (err, items) => {
+// // 		if (err) {
+// // 			console.log(err);
+// // 			res.status(500).send('An error occurred', err);
+// // 		}
+// // 		else {
+// // 			res.render('partials/dash-sliderbar', { items: items });
+// // 		}
+// // 	});
+// // });
+// // Step 8 - the POST handler for processing the uploaded file
+
+// router.post('/img', upload1.single('image'), (req, res, next) => {
+
+// 	var obj = {
+// 		name: req.body.name,
+// 		desc: req.body.desc,
+// 		img: {
+// 			data: fs.readFileSync(path.join(__dirname + './public/upload' + req.file.filename)),
+// 			contentType: 'image/png'
+// 		}
+   
+// 	}
+//   console.log(obj);
+//   Protfilio_Img.create(obj, (err, item) => {
+// 		if (err) {
+// 			console.log(err);
+// 		}
+// 		else {
+		
+// 			// res.redirect('/');
+//       res.redirect('/dash-social');
+// 		}
+// 	});
+// });
+
+
 // user operation
 
 //find
@@ -285,7 +346,7 @@ router.post('/add_social', userFilesHandler, async (req, res) => {
     await social.insertMany({
       Social_name,
       Link,
-      icon: icon[0].path,
+      icon: icon[0].filename
      
     });
 
@@ -301,7 +362,7 @@ router.post('/edit_social', function(req, res, next){
   var item = {
     Social_name: req.body.Social_name,
     Link: req.body.Link,
-    icon:req.body.icon
+    icon:req.body.icon,
   };
   var id = req.body.id;
   social.updateOne({"_id": id}, {$set: item}, item, function(err, result){
@@ -321,4 +382,5 @@ res.redirect('/dash-social');
 
 });
  
+
 module.exports = router;
