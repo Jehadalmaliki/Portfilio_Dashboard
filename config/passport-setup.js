@@ -3,7 +3,15 @@ const localStrategy=require('passport-local').Strategy
 const Userlogin=require('../models/userlogin');
 
 //saving user object in the session
-
+passport.serializeUser(function(user,done){
+    done(null,user.id);
+});
+passport.deserializeUser(function(id,done){
+    Userlogin.findById(id,function (err,user) {
+        done(err,user);
+        
+    })
+})
 passport.use('local.signup',new localStrategy({
     usernameField:'email',
     passwordField:'password',
