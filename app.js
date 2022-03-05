@@ -44,6 +44,7 @@ app.use((req, res, next) => {
 // bring passport
 app.use(passport.initialize())
 app.use(passport.session())
+
 // error handler
 app.use((err, req, res, next) => {
   // set locals, only providing error in development
@@ -54,5 +55,9 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.render('error');
 });
-
+// store user object
+// app.get('*',(req,res,next)=>{
+//   res.locals.user=req.user || null
+//   next()
+// })
 module.exports = app;

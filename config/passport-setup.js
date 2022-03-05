@@ -6,19 +6,21 @@ const Userlogin=require('../models/userlogin');
 passport.serializeUser(function(user,done){
     done(null,user.id);
 });
+//when you make requst
 passport.deserializeUser(function(id,done){
     Userlogin.findById(id,function (err,user) {
         done(err,user);
         
     })
 })
+// signup stratege
 passport.use('local.signup',new localStrategy({
     usernameField:'email',
     passwordField:'password',
     passReqToCallback:true
 },(req,username,password,done)=>{
     if(req.body.password !=req.body.confirm_password){
-        return done(null,false,req.flash('error','Password is error'))
+        return done(null,false,req.flash('error','Password do not match'))
     }else {
         Userlogin.findOne({email:username},(err,user)=>{
             if(err){
@@ -33,7 +35,7 @@ passport.use('local.signup',new localStrategy({
                 newUser.password=newUser.hashPassword(req.body.password)
                 newUser.save((err,user)=>{
                     if(!err){
-                        return done(null,false,req.flash('success','User Added'))  
+                        return done(null,user,req.flash('success','User Added'))  
                     }else{
                         console.log(err)
                     }
@@ -41,4 +43,28 @@ passport.use('local.signup',new localStrategy({
             }
         })
     }
+}))
+// login strategy
+passport.use('local.login',new localStrategy({
+    usernameField:'email',
+    passwordField:'password',
+    passReqToCallback:true
+},(req,username,password,done)=>{
+
+    //find user
+    Userlogin.findOne({email:username},(err,user)=>{
+        if(err){
+            return done(null,false,req.flash('error','something wrong happened'))  
+        }
+        if(!user){
+            return done(null,false,req.flash('error','user was not found')) 
+        }
+        if (user){
+            if(user.comparePasswords(password,user.password)){
+                return done(null,user,req.flash('success','welcome back'))
+            }else{
+                return done(null,false,req.flash('error','password is wrong'))  
+            }
+        }
+    })
 }))

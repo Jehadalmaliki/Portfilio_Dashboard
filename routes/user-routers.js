@@ -5,13 +5,16 @@ const router=express.Router();
 const Userlogin=require('../models/userlogin');
 //login user view
 router.get('/login',(req,res)=>{
- res.render('user/login')
+    console.log(req.body)
+    res.render('user/login',{error:req.flash('error')})
 })
 //login post request
-router.post('/login',(req,res)=>{
-    console.log(req.body)
-    res.render('user/singup')
-})
+router.post('/login',passport.authenticate('local.login',{
+    successRedirect:'/user/profilie',
+    failureRedirect:'/user/login',
+    failureFlash:true
+   
+}));
 
 //sign up form
 router.get('/signup',(req,res)=>{
@@ -20,7 +23,7 @@ router.get('/signup',(req,res)=>{
 })
 //sing up post
 router.post('/signup',passport.authenticate('local.signup',{
-    successRedirect:'/user/profilie"',
+    successRedirect:'/home',
     failureRedirect:'/user/signup',
     failureFlash:true
    
