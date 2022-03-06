@@ -156,6 +156,9 @@ router.get('/dash-Skill', function(req, res, next) {
 // user operation
 
 //find
+// middleware to check if user is logged in 
+
+
 router.get('/home', (req, res, next)=>{
   User.find().then((result) =>{
     res.render('pages/home', { data: result})

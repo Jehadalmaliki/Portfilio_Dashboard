@@ -14,10 +14,12 @@
         </li>
         <li class="nav-item">
           <a class="nav-link disabled" href="/user/signup">singup
-              
+            <li><a class="dropdown-item" href="/user/logout">logout</a></li>  
           </a>
         </li>
       </ul>
     </div>
   </nav>
-  
+  <% if (user) {%> 
+   <%= user.email %> 
+    <% } %> 
