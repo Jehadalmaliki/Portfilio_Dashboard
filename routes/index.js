@@ -61,7 +61,7 @@ const userFilesHandler = upload.fields([
 
 // Index page
 router.get('/index', async(req, res)=> {
-  var qualifications = await qualificationsModel.find();
+  var qualifications = await qualificationsModel.find({"is_active":true});
   var skill= await Skills.find();
   var experience= await experienceModel.find();
   var social1= await social.find();
@@ -175,7 +175,7 @@ router.post('/edit_User', userFilesHandler,function(req, res, next){
 //Delete user item
 
 router.get('/delete_user/:id',function(req,res,next){
-  User.deleteOne({"_id":req.params.id},function(err,result){
+  User.updateOne({"_id":req.params.id},function(err,result){
     console.log("item deleted");
   })
   res.redirect('/home');
@@ -216,7 +216,7 @@ router.post('/Edit_skills', function(req, res, next){
 //Delete skill item
 
 router.get('/delete_skill/:id',function(req,res,next){
-  Skills.deleteOne({"_id":req.params.id},function(err,result){
+  Skills.updateOne({"_id":req.params.id},{"is_active":false},function(err,result){
     console.log("item deleted");
   })
   res.redirect('/dash-Skill');
@@ -265,7 +265,7 @@ router.post('/edit_experience', function(req, res, next){
 //Delete experience item
 
 router.get('/delete_experience/:id',function(req,res,next){
-  experienceModel.deleteOne({"_id":req.params.id},function(err,result){
+  experienceModel.updateOne({"_id":req.params.id},{"is_active":false},function(err,result){
     console.log("item deleted");
   })
 res.redirect('/dash-Experince');
@@ -307,7 +307,7 @@ router.post('/edit_qualification', function(req, res, next){
 //Delete Eduction item
 
 router.get('/delete_qualification/:id',function(req,res,next){
-  qualificationsModel.deleteOne({"_id":req.params.id},function(err,result){
+  qualificationsModel.updateOne({"_id":req.params.id},{"is_active":false},function(err,result){
     console.log("item deleted");
   })
 res.redirect('/dash-Edu');
@@ -354,7 +354,7 @@ router.post('/edit_social', function(req, res, next){
 //Delete Social item
 
 router.get('/delete_social/:id',function(req,res,next){
-  social.deleteOne({"_id":req.params.id},function(err,result){
+  social.updateOne({"_id":req.params.id},{"is_active":false},function(err,result){
     console.log("item deleted");
   })
 res.redirect('/dash-social');
@@ -401,7 +401,7 @@ router.post('/edit_Works', function(req, res, next){
 //Delete Works item
 
 router.get('/delete_Works/:id',function(req,res,next){
- Works.deleteOne({"_id":req.params.id},function(err,result){
+ Works.updateOne({"_id":req.params.id},{"is_active":false},function(err,result){
     console.log("item deleted");
   })
 res.redirect('/dash-Works');
@@ -445,7 +445,7 @@ router.post('/edit_Service', function(req, res, next){
 //Delete Service item
 
 router.get('/delete_Service/:id',function(req,res,next){
-  Service.deleteOne({"_id":req.params.id},function(err,result){
+  Service.updateOne({"_id":req.params.id},{"is_active":false},function(err,result){
     console.log("item deleted");
   })
 res.redirect('/dash-Service');
