@@ -11,6 +11,7 @@ var experienceModel = require('../models/Experince');
 var qualificationsModel=require('../models/eduction');
 var social=require('../models/dash-socials');
 var Works=require('../models/Works');
+var Service=require('../models/dash-service');
 
 require('dotenv/config');
 const router = Router();
@@ -64,8 +65,9 @@ router.get('/index', async(req, res)=> {
   var skill= await Skills.find();
   var experience= await experienceModel.find();
   var social1= await social.find();
-
-  res.render('pages/index', { qualification:qualifications ,skills:skill ,data:experience,social:social1})
+  var Worksp= await Works.find();
+  var Servicea= await Service.find();
+  res.render('pages/index', { qualification:qualifications ,skills:skill ,data:experience,social:social1 ,Works:Worksp,Service:Servicea})
  
 });
 
@@ -109,7 +111,13 @@ router.get('/dash-Skill', function(req, res, next) {
   })
   });
  
- 
+//  Service page
+router.get('/dash-Service', function(req, res, next) {
+  Service.find().then((result)=>{
+    res.render('pages/dash-Service', { Service:result});
+  console.log(result);
+  })
+  });
  
 // user operation
 
@@ -329,7 +337,7 @@ router.post('/add_social', userFilesHandler, async (req, res) => {
 });
 // Edit  Social on the view in the data tables section
 
-router.post('/edit_social',userFilesHandler, function(req, res, next){
+router.post('/edit_social', function(req, res, next){
   var item = {
     Social_name: req.body.Social_name,
     Link: req.body.Link,
@@ -390,7 +398,7 @@ router.post('/edit_Works', function(req, res, next){
   res.redirect('/dash-Works');
 });
 
-//DeleteWorks item
+//Delete Works item
 
 router.get('/delete_Works/:id',function(req,res,next){
  Works.deleteOne({"_id":req.params.id},function(err,result){
@@ -399,6 +407,48 @@ router.get('/delete_Works/:id',function(req,res,next){
 res.redirect('/dash-Works');
 
 });
+// Add Service
+router.post('/add_Service',  userFilesHandler,async (req, res) => {
+  try {
+    const { Service_name, Link } = req.body;
+    const { icon } = req.body;
 
+    await Service.insertMany({
+      Service_name,
+      Link,
+      icon,
+     
+    });
 
+    res.redirect('/dash-Service');
+  } catch (err) {
+    console.log(err.writeErrors);
+   
+  }
+});
+// Edit  Service on the view in the data tables section
+
+router.post('/edit_Service', function(req, res, next){
+  var item = {
+    Service_name: req.body.Service_name,
+    Link: req.body.Link,
+    icon:req.body.icon,
+  };
+  var id = req.body.id;
+  Service.updateOne({"_id": id}, {$set: item}, item, function(err, result){
+    assert.equal(null, err);
+    console.log(item );
+  })
+  res.redirect('/dash-Service');
+});
+
+//Delete Service item
+
+router.get('/delete_Service/:id',function(req,res,next){
+  Service.deleteOne({"_id":req.params.id},function(err,result){
+    console.log("item deleted");
+  })
+res.redirect('/dash-Service');
+
+});
 module.exports = router;
