@@ -28,7 +28,7 @@
                                         <thead>
                                           <tr>
                                             <th scope="col">ID</th>
-                                            <th scope="col">Username</th>
+                                            <th scope="col">Photo</th>
                                             <th scope="col">phone</th>
                                             <th scope="col">Email</th>
                                             <th scope="col">ADdress</th>
@@ -44,7 +44,7 @@
                                             for(var i = 0; i< data.length; i++) {%> 
                                           <tr>
                                             <td scope="row" ><%= (i+1) %></td>
-                                            <th scope="row"><%=   data[i].username%></th>
+                                            <th scope="row"><img src="<%=   data[i].icon%> " class="w-75 h-100 "></th>
                                             <td><%=    data[i].phone%></td>
                                             <td><%=    data[i].email%></td>
                                             <td><%=   data[i].Address%></td>
@@ -68,12 +68,12 @@
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                  <form class="row g-3 needs-validation"  action="edit_User" method="post" >
+                  <form class="row g-3 needs-validation"  action="edit_User" method="post"   enctype="multipart/form-data">
                     <input type="hidden" name="id" value="<%= data[i]._id %>">
                       
                      <div class="mt-3">
-                    <label class="form-label" for="username-input">Username </label>
-                    <input required class="form-control w-25" type="text" name="username" id="username-input" value="<%=   data[i].username%>" />
+                    <label class="form-label" for="icon-input">Photo</label>
+                    <input required class="form-control w-25" type="file" name="icon" id="icon-input" value="<%=   data[i].icon%>" />
                      </div>
                     
                     
@@ -137,8 +137,8 @@
                    
                       
                      <div class="mt-3">
-                    <label class="form-label" for="username-input">Username </label>
-                    <input required class="form-control w-25" type="text" name="username" id="username-input" />
+                    <label class="form-label" for="icon-input">Photo </label>
+                    <input required class="form-control w-25" type="file" name="icon" id="icon-input" />
                      </div>
                     
                     
@@ -165,42 +165,7 @@
       </div>
   </div>
   <%- include('../partials/dash-script'); %>  
-  <!-- Modal Edit Image Profile -->
- <div class="modal fade" id="e" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content p-3">
-          <div class="modal-header">
-              <h4 class="modal-title fw-bold text-center" id="exampleModalLabel">Edit image profile</h4>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-              <form class="row g-3 " >
-                <div class="col-12">
-              
-                      <input type="text" placeholder="Name"
-                     name="name"  class="form-control" >
-              
-              </div>
-              <div class="col-12">
-               
-                    <input id="desc" name="desc" type="text"
-                    placeholder="Description" class="form-control" >
-         
-            </div>
-              
-                  <div class="col-12">
-                  
-                          <input type="file" class="form-control" name="image">
-                          
-                      </div>
-        
-                  <button  class="btn btn-primary" type="submit">Sumbut</button>
-              </form>
-          </div>
-         
-      </div>
-  </div>
-</div>
+ 
   <script>
     const trashcan = document.querySelector('a.delete');
     trashcan.addEventListener('click', (e) => {

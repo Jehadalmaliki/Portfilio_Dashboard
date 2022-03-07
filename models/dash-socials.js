@@ -31,6 +31,9 @@ const socialSchema = new mongoose.Schema({
     required: true,
     
   },
+  is_active: {
+    type: Boolean,
+     default: 1 },
  
 });
 

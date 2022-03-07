@@ -39,7 +39,7 @@ const storage = multer.diskStorage({
 const upload = multer({
   fileFilter: (req, { fieldname, mimetype, originalname }, cb) => {
     const isicon =
-      fieldname == 'icon' && mimetype == 'image/jpeg';
+      fieldname == 'icon' ;
    
   
 
@@ -99,60 +99,9 @@ router.get('/dash-Skill', function(req, res, next) {
   console.log(result);
   })
   });
-//   // image protfilio
-
-// var storage1 = multer.diskStorage({
-// 	destination: (req, file, cb) => {
-// 		cb(null, './public/upload')
-// 	},
-// 	filename: (req, file, cb) => {
-// 		cb(null, file.fieldname + '-' + Date.now())
-// 	}
-// });
-
-// var upload1 = multer({ storage: storage1 });
-// // Step 6 - load the mongoose model for Image
-
-
-
-// // router.get('/', (req, res) => {
-// //   Protfilio_Img.find({}, (err, items) => {
-// // 		if (err) {
-// // 			console.log(err);
-// // 			res.status(500).send('An error occurred', err);
-// // 		}
-// // 		else {
-// // 			res.render('partials/dash-sliderbar', { items: items });
-// // 		}
-// // 	});
-// // });
-// // Step 8 - the POST handler for processing the uploaded file
-
-// router.post('/img', upload1.single('image'), (req, res, next) => {
-
-// 	var obj = {
-// 		name: req.body.name,
-// 		desc: req.body.desc,
-// 		img: {
-// 			data: fs.readFileSync(path.join(__dirname + './public/upload' + req.file.filename)),
-// 			contentType: 'image/png'
-// 		}
-   
-// 	}
-//   console.log(obj);
-//   Protfilio_Img.create(obj, (err, item) => {
-// 		if (err) {
-// 			console.log(err);
-// 		}
-// 		else {
-		
-// 			// res.redirect('/');
-//       res.redirect('/dash-social');
-// 		}
-// 	});
-// });
-
-
+ 
+ 
+ 
 // user operation
 
 //find
@@ -162,27 +111,37 @@ router.get('/home', (req, res, next)=>{
   })
 })
 // add user
-router.post('/user-info', function(req, res, next) {
-    var userDetails = new  User({
-      username: req.body.username,
-      phone: req.body. phone,
-      Address: req.body. Address,
-      email: req.body. email,
-    })
-     
-    userDetails.save();
-    res.redirect('/home');
 
-});
+
+    router.post('/user-info', userFilesHandler, async (req, res) => {
+      try {
+        const {  phone,  Address, email } = req.body;
+        const { icon } = req.files;
+    
+        await  User.insertMany({
+          phone,
+      Address,
+      email,
+          icon: icon[0].filename
+         
+        });
+    
+        res.redirect('/home');
+      } catch (err) {
+        console.log(err.writeErrors);
+        res.json(err.writeErrors[0].errmsg);
+      }
+    });
 //Edit  user on the view in the data tables section
 
-router.post('/edit_User', function(req, res, next){
-  console.log(req.body.username);
+router.post('/edit_User', userFilesHandler,function(req, res, next){
+  
   var item = {
     username: req.body.username,
     phone: req.body.phone,
     Address:req.body.Address,
     email:req.body.email,
+    icon:req.files.icon[0].filename,
   };
   var id = req.body.id;
   User.updateMany({"_id": id}, {$set: item}, item, function(err, result){
@@ -381,6 +340,6 @@ router.get('/delete_social/:id',function(req,res,next){
 res.redirect('/dash-social');
 
 });
- 
+
 
 module.exports = router;

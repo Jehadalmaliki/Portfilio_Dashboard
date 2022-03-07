@@ -15,10 +15,10 @@ const fileSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  username: {
+  icon: {
     type: String,
     required: true,
-    unique: true,
+
     
   },
   phone: {
@@ -39,18 +39,11 @@ const fileSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  password :{
-    type  : String,
-    required : true
-} ,
+
   is_active: {
      type: Boolean,
-      default: 1 }
-  // cv_file: {
-  //   type: String,
-  //   required: true,
-  //   unique: true,
-  // },
+      default: 1 },
+
 });
 
 const User = mongoose.model('User', fileSchema);
