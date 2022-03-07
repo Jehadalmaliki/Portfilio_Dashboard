@@ -14,10 +14,13 @@ var qualificationsSchema = new Sechema({
             university:{
                 type:String,
                 required:true,
-            }
+            },
 
-            
+            is_active: {
+                type: Boolean,
+                 default: 1 },  
         },
+        
         {
             timestamps:true
         }
