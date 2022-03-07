@@ -10,7 +10,7 @@ const Skills = require('./../models/dash-skills');
 var experienceModel = require('../models/Experince');
 var qualificationsModel=require('../models/eduction');
 var social=require('../models/dash-socials');
-var Protfilio_Img=require('../models/image_protifilio');
+
 require('dotenv/config');
 const router = Router();
 // ===multer file==//
