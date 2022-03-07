@@ -19,7 +19,7 @@ mongoose
         type: Number,
          required: true },
     is_active: {
-         type: Number,
+         type: Boolean,
           default: 1 },
     createdAt: {
          type: Date,
