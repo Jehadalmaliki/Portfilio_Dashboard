@@ -10,6 +10,7 @@ const Skills = require('./../models/dash-skills');
 var experienceModel = require('../models/Experince');
 var qualificationsModel=require('../models/eduction');
 var social=require('../models/dash-socials');
+var Works=require('../models/Works');
 
 require('dotenv/config');
 const router = Router();
@@ -77,6 +78,14 @@ router.get('/dash-social', function(req, res) {
   })
  
 });
+// Works page
+router.get('/dash-Works', function(req, res) {
+  Works.find().then((result)=>{
+  
+    res.render('pages/dash-Works', { Works:result });
+  })
+ 
+});
 // Eduction page
  
 router.get('/dash-Edu', function(req, res, next) {
@@ -140,7 +149,7 @@ router.get('/home', (req, res, next)=>{
 router.post('/edit_User', userFilesHandler,function(req, res, next){
   
   var item = {
-    username: req.body.username,
+  
     phone: req.body.phone,
     Address:req.body.Address,
     email:req.body.email,
@@ -303,12 +312,12 @@ res.redirect('/dash-Edu');
 router.post('/add_social', userFilesHandler, async (req, res) => {
   try {
     const { Social_name, Link } = req.body;
-    const { icon } = req.files;
+    const { icon } = req.body;
 
     await social.insertMany({
       Social_name,
       Link,
-      icon: icon[0].filename
+      icon,
      
     });
 
@@ -324,7 +333,7 @@ router.post('/edit_social',userFilesHandler, function(req, res, next){
   var item = {
     Social_name: req.body.Social_name,
     Link: req.body.Link,
-    icon:req.files.icon[0].filename,
+    icon:req.body.icon,
   };
   var id = req.body.id;
   social.updateOne({"_id": id}, {$set: item}, item, function(err, result){
@@ -341,6 +350,53 @@ router.get('/delete_social/:id',function(req,res,next){
     console.log("item deleted");
   })
 res.redirect('/dash-social');
+
+});
+
+//AddWorks item
+
+
+router.post('/add_Works', userFilesHandler, async (req, res) => {
+  try {
+    const {Works_name, Link } = req.body;
+    const { icon } = req.files;
+
+    await Works.insertMany({
+     Works_name,
+      Link,
+      icon: icon[0].filename
+     
+    });
+
+    res.redirect('/dash-Works');
+  } catch (err) {
+    console.log(err.writeErrors);
+    
+  }
+});
+// Edit Works on the view in the data tables section
+
+router.post('/edit_Works', function(req, res, next){
+  var item = {
+   Works_name: req.body.Works_name,
+    Link: req.body.Link,
+    icon:req.files.icon[0].filename,
+  };
+  var id = req.body.id;
+ Works.updateOne({"_id": id}, {$set: item}, item, function(err, result){
+    assert.equal(null, err);
+    console.log(item );
+  })
+  res.redirect('/dash-Works');
+});
+
+//DeleteWorks item
+
+router.get('/delete_Works/:id',function(req,res,next){
+ Works.deleteOne({"_id":req.params.id},function(err,result){
+    console.log("item deleted");
+  })
+res.redirect('/dash-Works');
 
 });
 
