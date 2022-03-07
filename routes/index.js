@@ -361,11 +361,11 @@ router.post('/add_social', userFilesHandler, async (req, res) => {
 });
 // Edit  Social on the view in the data tables section
 
-router.post('/edit_social', function(req, res, next){
+router.post('/edit_social',userFilesHandler, function(req, res, next){
   var item = {
     Social_name: req.body.Social_name,
     Link: req.body.Link,
-    icon:req.body.icon,
+    icon:req.files.icon[0].filename,
   };
   var id = req.body.id;
   social.updateOne({"_id": id}, {$set: item}, item, function(err, result){
