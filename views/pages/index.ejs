@@ -165,27 +165,19 @@ else{
                     <div class="text">Get in Touch</div>
                     <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dignissimos harum corporis fuga corrupti. Doloribus quis soluta nesciunt veritatis vitae nobis?</p>
                     <div class="icons">
+                        <% if(social.length) { 
+                            
+                            for(var i=0;i<social.length;i++) { %>
                         <div class="row">
-                            <i class="fab fa-facebook"></i>
+                            <i class="  <%=social[i].icon %>"></i>
                             <div class="info">
-                                <div class="head">facebook</div>
-                                <div class="sub-title">JehadAlmalik@facebook</div>
+                                <div class="head">  <%=social[i].Social_name %></div>
+                                <div class="sub-title">       <%=social[i].Link %></div>
                             </div>
                         </div>
-                        <div class="row">
-                            <i class="fab fa-linkedin-in"></i>
-                            <div class="info">
-                                <div class="head">LinkedIn</div>
-                                <div class="sub-title">Jehadalimaliki@LinkedIn</div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <i class="fab fa-github"></i>
-                            <div class="info">
-                                <div class="head">GitHub</div>
-                                <div class="sub-title">github.com/Jehadalmaliki</div>
-                            </div>
-                        </div>
+                        <% } }else{ %>
+                           <h1>NO Scoial</h1>
+                            <%} %> 
                     </div>
                 </div>
                 <div class="column right">
