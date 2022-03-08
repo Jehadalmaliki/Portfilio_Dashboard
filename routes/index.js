@@ -59,17 +59,7 @@ const userFilesHandler = upload.fields([
   
 ]);
 
-// Index page
-router.get('/index', async(req, res)=> {
-  var qualifications = await qualificationsModel.find({"is_active":true});
-  var skill= await Skills.find();
-  var experience= await experienceModel.find();
-  var social1= await social.find();
-  var Worksp= await Works.find();
-  var Servicea= await Service.find();
-  res.render('pages/index', { qualification:qualifications ,skills:skill ,data:experience,social:social1 ,Works:Worksp,Service:Servicea})
- 
-});
+
 
 
 // Social page
@@ -118,7 +108,17 @@ router.get('/dash-Service', function(req, res, next) {
   console.log(result);
   })
   });
+ // Index page
+router.get('/index', async(req, res)=> {
+  var qualifications = await qualificationsModel.find();;
+  var skill= await Skills.find();
+  var experience= await experienceModel.find();
+  var social1= await social.find();
+  var Worksp= await Works.find();
+  var Servicea= await Service.find();
+  res.render('pages/index', { qualification:qualifications ,skills:skill ,data:experience,social:social1 ,Works:Worksp,Service:Servicea})
  
+});
 // user operation
 
 //find
@@ -255,7 +255,7 @@ router.post('/edit_experience', function(req, res, next){
     End_Date: req.body.End_Date
   };
   var id = req.body.id;
-  experienceModel.updateOne({"_id": id}, {$set: item}, item, function(err, result){
+  experienceModel.updateMany({"_id": id}, {$set: item}, item, function(err, result){
     assert.equal(null, err);
     console.log("item updated");
   })
@@ -297,7 +297,7 @@ router.post('/edit_qualification', function(req, res, next){
     university:req.body.university
   };
   var id = req.body.id;
-  qualificationsModel.updateOne({"_id": id}, {$set: item}, item, function(err, result){
+  qualificationsModel.updateMany({"_id": id}, {$set: item}, item, function(err, result){
     assert.equal(null, err);
     console.log("item updated");
   })
@@ -344,7 +344,7 @@ router.post('/edit_social', function(req, res, next){
     icon:req.body.icon,
   };
   var id = req.body.id;
-  social.updateOne({"_id": id}, {$set: item}, item, function(err, result){
+  social.updateMany({"_id": id}, {$set: item}, item, function(err, result){
     assert.equal(null, err);
     console.log(item );
   })
@@ -384,14 +384,14 @@ router.post('/add_Works', userFilesHandler, async (req, res) => {
 });
 // Edit Works on the view in the data tables section
 
-router.post('/edit_Works', function(req, res, next){
+router.post('/edit_Works',userFilesHandler, function(req, res, next){
   var item = {
    Works_name: req.body.Works_name,
     Link: req.body.Link,
     icon:req.files.icon[0].filename,
   };
   var id = req.body.id;
- Works.updateOne({"_id": id}, {$set: item}, item, function(err, result){
+ Works.updateMany({"_id": id}, {$set: item}, item, function(err, result){
     assert.equal(null, err);
     console.log(item );
   })
@@ -435,7 +435,7 @@ router.post('/edit_Service', function(req, res, next){
     icon:req.body.icon,
   };
   var id = req.body.id;
-  Service.updateOne({"_id": id}, {$set: item}, item, function(err, result){
+  Service.updateMany({"_id": id}, {$set: item}, item, function(err, result){
     assert.equal(null, err);
     console.log(item );
   })
