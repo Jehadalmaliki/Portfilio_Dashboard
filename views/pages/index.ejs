@@ -54,7 +54,7 @@
 <div class="skills-box">
     <i ><h3><%=skills[e].title%></h3></i>
     <span><%=skills[e].progress_percent %></span>
-    <div class="percent-bar html-bar"></div>
+    <div class="percent-bar " style="width:<%=skills[e].progress_percent %>%"></div>
 </div>
                 
                 
@@ -108,29 +108,20 @@ else{
             <h1>services</h1>
         </div>
         <div class="provided">
-            
+            <% if(Service.length) {
+                for(var i=0;i<Service.length;i++) { %>
+                
             <div class="box">
-                <i class="fas fa-laptop-code"></i>
-                <h3>Web Designing</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing .</p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing .</p>
+                <i class="<%=Service[i].icon %>"></i>
+                <h3>  <%=Service[i].Service_name %></h3>
+                <p>  <%=Service[i].Link %></p>
+                <p>  <%=Service[i].Link %></p>
                 
             </div>
             
-            <div class="box">
-                <i class="fas fa-code-branch"></i>
-                <h3>Apps Designing</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing .</p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing .</p>
-                
-            </div>
-            <div class="box">
-                <i class="fas fa-code"></i>
-                <h3>UI/Ux</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing .</p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing .</p>
-                
-            </div>
+            <% } }else{ %>
+               <h1> NO Service</h1>
+               <%} %> 
             
         </div>
         
@@ -142,29 +133,21 @@ else{
     
             <!-- Content -->
             <div class="portfolio-content">
+                <% if(Works.length) { 
+                            
+                            for(var i=0;i<Works.length;i++) { %>
                 <div class="p-box">
                     <div class="p-img">
-                        <img src="images/a1.png" alt=""  onmouseover="OnMouseIn (this)" onmouseout="OnMouseOut (this)">
+                        <img src="<%=Works[i].icon %>" alt=""  onmouseover="OnMouseIn (this)" onmouseout="OnMouseOut (this)">
                         
                     </div>
-                    <h2>Website of Userbot</h2>
+                    <h2>  <%=Works[i].Works_name %></h2>
                     
                 </div>
-                <div class="p-box">
-                    <div class="p-img">
-                        <img src="images/a2.png" alt=""  onmouseover="OnMouseIn (this)" onmouseout="OnMouseOut (this)">
-                        
-                    </div>
-                    <h2>The portfolio of Jehad</h2>
+                <% } }else{ %>
+                    لNO Scoial
                     
-                </div>
-                <div class="p-box">
-                    <div class="p-img">
-                        <img src="images/a3.png" alt="" onmouseover="OnMouseIn (this)" onmouseout="OnMouseOut (this)">
-                        
-                    </div>
-                    <h2>UX/UI design of equity</h2>
-                    
+                    <%} %> 
                 </div>
             </div>
         </div>

@@ -74,11 +74,11 @@
       <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
           <div class="modal-content p-3">
               <div class="modal-header">
-                  <h4 class="modal-title fw-bold text-center" id="exampleModalLabel">Social</h4>
+                  <h4 class="modal-title fw-bold text-center" id="exampleModalLabel">Edit Social</h4>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                  <form class="row g-3 needs-validation" action="/edit_social" method="post" enctype="multipart/form-data">
+                  <form class="row g-3 needs-validation" action="/edit_social" method="post" >
                     <input type="hidden" name="id" value="<%=social[i]._id%>">
                     
                       <div class="col-12">
@@ -132,7 +132,7 @@
       <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
           <div class="modal-content p-3">
               <div class="modal-header">
-                  <h4 class="modal-title fw-bold text-center" id="exampleModalLabel">Social</h4>
+                  <h4 class="modal-title fw-bold text-center" id="exampleModalLabel">Add Social</h4>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
